@@ -10,7 +10,10 @@ public class User {
     private String name;
     private int age;
     private Timestamp createdDate;
-    private boolean isAdmin;
+    private Boolean isAdmin = false;
+
+    public User() {
+    }
 
     @Id
     @Column(name = "id")
@@ -23,6 +26,7 @@ public class User {
         this.id = id;
     }
 
+    @Basic
     @Column(name = "name")
     public String getName() {
         return name;
@@ -32,6 +36,7 @@ public class User {
         this.name = name;
     }
 
+    @Basic
     @Column(name = "age")
     public int getAge() {
         return age;
@@ -41,6 +46,7 @@ public class User {
         this.age = age;
     }
 
+    @Basic
     @Column(name = "createdDate")
     public Timestamp getCreatedDate() {
         return createdDate;
@@ -50,23 +56,38 @@ public class User {
         this.createdDate = createdDate;
     }
 
+    @Basic
     @Column(name = "isAdmin")
-    public boolean isAdmin() {
+    public Boolean getIsAdmin() {
+
         return isAdmin;
     }
 
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
+    public void setIsAdmin(Boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
     @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                ", createdDate=" + createdDate +
-                ", isAdmin=" + isAdmin +
-                '}';
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (id != user.id) return false;
+        if (age != user.age) return false;
+        if (name != null ? !name.equals(user.name) : user.name != null) return false;
+        if (createdDate != null ? !createdDate.equals(user.createdDate) : user.createdDate != null) return false;
+        return isAdmin != null ? isAdmin.equals(user.isAdmin) : user.isAdmin == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + age;
+        result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
+        result = 31 * result + (isAdmin != null ? isAdmin.hashCode() : 0);
+        return result;
     }
 }

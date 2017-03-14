@@ -22,21 +22,19 @@ public class UserDaoImpl implements UserDao {
     }
 
     public void addUser(User user) {
-        try (Session session = sessionFactory.openSession()) {
-            session.persist(user);
-            logger.info("User was successfully persisted. User info: " + user.toString());
-        }
+        Session session = sessionFactory.getCurrentSession();
+        session.persist(user);
+        logger.info("User was successfully persisted. User info: " + user.toString());
     }
 
     public void updateUser(User user) {
-        try (Session session = sessionFactory.openSession()) {
-            session.update(user);
-            logger.info("User was successfully updated. User info: " + user.toString());
-        }
+        Session session = sessionFactory.getCurrentSession();
+        session.update(user);
+        logger.info("User was successfully updated. User info: " + user.toString());
     }
 
     public void removeUser(int id) {
-        try (Session session = sessionFactory.openSession()) {
+        Session session = sessionFactory.getCurrentSession();
             User user = session.load(User.class, id);
             if (user != null) {
                 session.delete(user);
@@ -44,22 +42,20 @@ public class UserDaoImpl implements UserDao {
             } else {
                 logger.error("User with id = " + id + " was not found");
             }
-        }
+
     }
 
     public User getUserById(int id) {
-        try (Session session = sessionFactory.openSession()) {
-            User user = session.load(User.class, id);
-            logger.info("User was successfully persisted. User info: " + user.toString());
-            return user;
-        }
+        Session session = sessionFactory.getCurrentSession();
+        User user = session.load(User.class, id);
+        logger.info("User was successfully persisted. User info: " + user.toString());
+        return user;
     }
     @SuppressWarnings("unchecked")
     public List<User> listUsers() {
-        try (Session session = sessionFactory.openSession()) {
-            List<User> userList = session.createQuery("from user").list();
-            logger.info("User data was successfully loaded. Users: " + userList);
-            return userList;
-        }
+        Session session = sessionFactory.getCurrentSession();
+        List<User> userList = session.createQuery("from com.bocco.test.model.User").list();
+        logger.info("User data was successfully loaded. Users: " + userList);
+        return userList;
     }
 }

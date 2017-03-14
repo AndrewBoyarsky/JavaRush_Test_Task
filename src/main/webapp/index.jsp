@@ -14,6 +14,6 @@
 <body>
 <h3>Test task for JavaRush</h3>
 <br>
-<a href="<c:url value="/WEB-INF/pages/users.jsp"/>">Lets start!</a>
+<a href="<c:url value="/users"/>">Go</a>
 </body>
 </html>
